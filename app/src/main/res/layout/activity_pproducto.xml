@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:parentActivityName=".MainActivity"
+    tools:context=".producto.PresentacionProducto">
+
+    <TextView
+        android:id="@+id/producto_id"
+        android:layout_width="395dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:layout_x="8dp"
+        android:layout_y="32dp"
+        android:ems="10"
+        android:inputType="none"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/producto_nombre"
+        android:layout_width="395dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_x="9dp"
+        android:layout_y="151dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/producto_id" />
+
+    <EditText
+        android:id="@+id/producto_marca"
+        android:layout_width="395dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_x="9dp"
+        android:layout_y="94dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/producto_nombre" />
+    <Button
+        android:id="@+id/btnNuevo"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnEliminar"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginBottom="23dp"
+        android:layout_x="126dp"
+        android:layout_y="218dp"
+        android:text="@string/btnTextNuevo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/categoria_descripcion" />
+    <Button
+        android:id="@+id/btnEliminar"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/producto_list_view"
+        android:layout_marginStart="44dp"
+        android:layout_marginBottom="39dp"
+        android:layout_x="11dp"
+        android:layout_y="219dp"
+        android:text="@string/btnTextDelete"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="288dp" />
+
+    <Button
+        android:id="@+id/btnGuardar"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnEliminar"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginBottom="23dp"
+        android:layout_x="243dp"
+        android:layout_y="219dp"
+        android:text="@string/btnTextStore"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/producto_marca" />
+
+    <ListView
+        android:id="@+id/producto_list_view"
+        android:layout_width="400dp"
+        android:layout_height="430dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="68dp"
+        android:layout_x="5dp"
+        android:layout_y="307dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnEliminar" />
+</AbsoluteLayout>

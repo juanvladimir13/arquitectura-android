@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Arquitectura de SW</string>
+
+    <string name="btnTextNuevo">New</string>
+    <string name="btnTextStore">Sto</string>
+    <string name="btnTextDelete">Del</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

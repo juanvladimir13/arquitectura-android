@@ -25,8 +25,6 @@ public class VistaCategoria extends AppCompatActivity {
     public ListView categoriaListView;
     private ArrayAdapter<DTOCategoria> categoriaListAdapter;
 
-    public SQLiteDatabase db;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,21 +33,23 @@ public class VistaCategoria extends AppCompatActivity {
         txtId = (TextView) findViewById(R.id.categoria_id);
         txtDescripcion = (EditText) findViewById(R.id.categoria_descripcion);
         txtNombre = (EditText) findViewById(R.id.categoria_nombre);
-        btnNuevo = findViewById(R.id.btnNuevo);
-        btnGuardar = findViewById(R.id.btnGuardar);
-        btnEliminar = findViewById(R.id.btnEliminar);
-        categoriaListView = (ListView)findViewById(R.id.categoria_list_view);
 
+        btnNuevo = (Button) findViewById(R.id.btnNuevo);
+        btnGuardar = (Button) findViewById(R.id.btnGuardar);
+        btnEliminar = (Button) findViewById(R.id.btnEliminar);
+
+        categoriaListView = (ListView) findViewById(R.id.categoria_list_view);
         categoriaListAdapter = new ArrayAdapter<DTOCategoria>(this, R.layout.list_item);
         categoriaListView.setAdapter(categoriaListAdapter);
 
-        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this, "administracion", null, 3);
-        db = admin.getWritableDatabase();
+        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this);
+        SQLiteDatabase db = admin.getWritableDatabase();
 
-        ControllerCategoria controllerProducto = new ControllerCategoria(this);
+        ModeloCategoria modeloCategoria = new ModeloCategoria(db);
+        ControllerCategoria controllerProducto = new ControllerCategoria(this, modeloCategoria);
     }
 
-    public void setRowsDataList(List<DTOCategoria> list){
+    public void setRowsDataList(List<DTOCategoria> list) {
         categoriaListAdapter.clear();
         for (int i = 0; i < list.size(); i++) {
             categoriaListAdapter.add(list.get(i));
@@ -66,7 +66,7 @@ public class VistaCategoria extends AppCompatActivity {
     }
 
     public void setFormData(DTOCategoria dto) {
-        if (dto == null) return ;
+        if (dto == null) return;
         txtId.setText(dto.id);
         txtNombre.setText(dto.nombre);
         txtDescripcion.setText(dto.descripcion);

@@ -1,20 +1,19 @@
 package com.juanvladimir13.arquitectura.producto;
 
-import android.database.sqlite.SQLiteDatabase;
-
 import java.util.List;
 
 public class NegocioProducto {
     private DatoProducto dato;
 
-    public NegocioProducto(SQLiteDatabase BaseDeDatos) {
-        this.dato = new DatoProducto(BaseDeDatos);
+    public NegocioProducto(DatoProducto dato) {
+        this.dato = dato;
     }
 
-    public void setAttributesData(DTOProducto dto){
+    public void setAttributesData(DTOProducto dto) {
         dato.setAttributesData(dto);
     }
-    public DTOProducto saveRecord(){
+
+    public DTOProducto saveRecord() {
         return dato.saveInDatabase();
     }
 
@@ -22,7 +21,7 @@ public class NegocioProducto {
         return dato.rowsList();
     }
 
-    public boolean deleteRecord(){
+    public boolean deleteRecord() {
         return dato.deleteRecordInDatabase();
     }
 

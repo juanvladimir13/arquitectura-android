@@ -26,7 +26,6 @@ public class PresentacionProducto extends AppCompatActivity {
     private Button btnEliminar;
     private ListView productoListView;
     private ArrayAdapter<DTOProducto> productoListAdapter;
-    private SQLiteDatabase db;
 
     private NegocioProducto negocio;
 
@@ -38,10 +37,14 @@ public class PresentacionProducto extends AppCompatActivity {
         txtId = (TextView) findViewById(R.id.producto_id);
         txtNombre = (EditText) findViewById(R.id.producto_nombre);
         txtMarca = (EditText) findViewById(R.id.producto_marca);
-        btnNuevo = findViewById(R.id.btnNuevo);
-        btnGuardar = findViewById(R.id.btnGuardar);
-        btnEliminar = findViewById(R.id.btnEliminar);
-        productoListView = (ListView)findViewById(R.id.producto_list_view);
+
+        btnNuevo = (Button) findViewById(R.id.btnNuevo);
+        btnGuardar = (Button) findViewById(R.id.btnGuardar);
+        btnEliminar = (Button) findViewById(R.id.btnEliminar);
+
+        productoListView = (ListView) findViewById(R.id.producto_list_view);
+        productoListAdapter = new ArrayAdapter<DTOProducto>(this, R.layout.list_item);
+        productoListView.setAdapter(productoListAdapter);
 
         btnGuardar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -61,25 +64,24 @@ public class PresentacionProducto extends AppCompatActivity {
             }
         });
 
-        productoListAdapter = new ArrayAdapter<DTOProducto>(this, R.layout.list_item);
-        productoListView.setAdapter(productoListAdapter);
-
         productoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String codigo = ((DTOProducto)productoListView.getItemAtPosition(i)).id;
-                setFormData(negocio.findRecord(codigo));
+                String id = ((DTOProducto) productoListView.getItemAtPosition(i)).id;
+                setFormData(negocio.findRecord(id));
             }
         });
 
-        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this, "administracion", null, 3);
-        db = admin.getWritableDatabase();
-        negocio = new NegocioProducto(db);
+        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this);
+        SQLiteDatabase db = admin.getWritableDatabase();
+
+        DatoProducto datoProducto = new DatoProducto(db);
+        negocio = new NegocioProducto(datoProducto);
 
         setRowsDataList();
     }
 
-    private void setRowsDataList(){
+    private void setRowsDataList() {
         List<DTOProducto> list = negocio.rowsList();
         productoListAdapter.clear();
 
@@ -92,13 +94,13 @@ public class PresentacionProducto extends AppCompatActivity {
         negocio.setAttributesData(readFormData());
         DTOProducto dto = negocio.saveRecord();
 
-        if (dto == null ) return;
+        if (dto == null) return;
 
         setFormData(dto);
         setRowsDataList();
     }
 
-    private void delete(){
+    private void delete() {
         negocio.setAttributesData(readFormData());
         negocio.deleteRecord();
 
@@ -116,7 +118,7 @@ public class PresentacionProducto extends AppCompatActivity {
     }
 
     private void setFormData(DTOProducto dto) {
-        if (dto == null) return ;
+        if (dto == null) return;
         txtId.setText(dto.id);
         txtNombre.setText(dto.nombre);
         txtMarca.setText(dto.marca);

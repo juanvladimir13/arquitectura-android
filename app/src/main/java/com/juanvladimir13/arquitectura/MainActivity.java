@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.categoria) {
             Intent intent = new Intent(this, VistaCategoria.class);
             startActivity(intent);
-        }else if (id == R.id.producto) {
+        } else if (id == R.id.producto) {
             Intent intent = new Intent(this, PresentacionProducto.class);
             startActivity(intent);
         }

@@ -4,10 +4,9 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import java.util.LinkedList;
-import java.util.List;
+import com.juanvladimir13.arquitectura.Template;
 
-public class DatoProducto {
+public class DatoProducto extends Template<DTOProducto> {
     private String id;
     private String nombre;
     private String marca;
@@ -65,24 +64,22 @@ public class DatoProducto {
         return dto;
     }
 
-    public List<DTOProducto> rowsList() {
-        List<DTOProducto> rows = new LinkedList<>();
-
-        String sql = String.format("select * from producto");
-        Cursor cursor = db.rawQuery(sql, null);
-
-        while (cursor.moveToNext()) {
-            DTOProducto dto = new DTOProducto(
-                    cursor.getString(0),
-                    cursor.getString(1),
-                    cursor.getString(2)
-            );
-            rows.add(dto);
-        }
-        return rows;
-    }
-
     public boolean deleteRecordInDatabase() {
         return db.delete("producto", "id=" + id, null) > 0;
+    }
+
+    @Override
+    public Cursor getCursor() {
+        String sql = "SELECT * FROM producto;";
+        return db.rawQuery(sql, null);
+    }
+
+    @Override
+    public DTOProducto getModel(Cursor cursor) {
+        return new DTOProducto(
+                cursor.getString(0),
+                cursor.getString(1),
+                cursor.getString(2)
+        );
     }
 }

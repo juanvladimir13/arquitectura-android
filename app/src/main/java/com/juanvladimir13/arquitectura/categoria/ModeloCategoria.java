@@ -4,10 +4,9 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import java.util.LinkedList;
-import java.util.List;
+import com.juanvladimir13.arquitectura.Template;
 
-public class ModeloCategoria {
+public class ModeloCategoria extends Template<DTOCategoria> {
     private String id;
     private String nombre;
     private String descripcion;
@@ -29,6 +28,7 @@ public class ModeloCategoria {
 
     public DTOCategoria saveInDatabase() {
         ContentValues values = new ContentValues();
+        
         values.put("descripcion", descripcion);
         values.put("nombre", nombre);
 
@@ -65,24 +65,22 @@ public class ModeloCategoria {
         return dto;
     }
 
-    public List<DTOCategoria> rowsList() {
-        List<DTOCategoria> rows = new LinkedList<>();
-
-        String sql = String.format("select * from categoria");
-        Cursor cursor = db.rawQuery(sql, null);
-
-        while (cursor.moveToNext()) {
-            DTOCategoria dto = new DTOCategoria(
-                    cursor.getString(0),
-                    cursor.getString(1),
-                    cursor.getString(2)
-            );
-            rows.add(dto);
-        }
-        return rows;
-    }
-
     public boolean deleteRecordInDatabase() {
         return db.delete("categoria", "id=" + id, null) > 0;
+    }
+
+    @Override
+    public Cursor getCursor() {
+        String sql = "SELECT * FROM categoria;";
+        return db.rawQuery(sql, null);
+    }
+
+    @Override
+    public DTOCategoria getModel(Cursor cursor) {
+        return new DTOCategoria(
+                cursor.getString(0),
+                cursor.getString(1),
+                cursor.getString(2)
+        );
     }
 }

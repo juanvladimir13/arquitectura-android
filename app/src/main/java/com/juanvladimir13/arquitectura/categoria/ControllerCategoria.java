@@ -11,10 +11,11 @@ public class ControllerCategoria {
         this.vista = vista;
         this.modelo = modelo;
         initListener();
-        vista.setRowsDataList(modelo.rowsList());
+        this.vista.setRowsDataList(modelo.rowsList());
     }
 
     private void store() {
+    	
         modelo.setAttributesData(vista.readFormData());
         DTOCategoria dto = modelo.saveInDatabase();
 
@@ -26,7 +27,9 @@ public class ControllerCategoria {
 
     private void delete() {
         modelo.setAttributesData(vista.readFormData());
+        
         modelo.deleteRecordInDatabase();
+        
         vista.cleanFormData();
         vista.setRowsDataList(modelo.rowsList());
     }
@@ -53,8 +56,8 @@ public class ControllerCategoria {
         vista.categoriaListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String codigo = ((DTOCategoria) vista.categoriaListView.getItemAtPosition(i)).id;
-                vista.setFormData(modelo.findRecordInDatabase("id", codigo));
+                String id = ((DTOCategoria) vista.categoriaListView.getItemAtPosition(i)).id;
+                vista.setFormData(modelo.findRecordInDatabase("id", id));
             }
         });
     }
